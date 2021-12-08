@@ -10,21 +10,35 @@
 
 <body>
   <div id="app">
-
+    <p>{{ oneComputed }}</p>
+    <p>{{ array[0] }}</p>
+    <p>{{ array[num] }}</p>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
   <script>
+    const state = { count: 0 }
     const app = new Vue({
       el: "#app",
 
       data: {
-
+        message: {
+          object: 2
+        },
+        array: ["Vue.js", "React", "Laravel"],
+        num: 2
       },
 
       methods: {
 
+      },
+
+      computed: {
+        oneComputed: function() {
+          return this.message.object > 1 ? true : false
+        }
       }
     });
+    state.count++;
   </script>
 </body>
 
