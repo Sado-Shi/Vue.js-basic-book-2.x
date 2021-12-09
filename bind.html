@@ -13,10 +13,20 @@
     <p>{{ oneComputed }}</p>
     <p>{{ array[0] }}</p>
     <p>{{ array[num] }}</p>
+    <p>{{ message.object }}</p>
+
+    <div :text-content.prop="message">...</div>
+    <div :scroll-top.prop="scroll">...</div>
+
+    <p>{{ count }}回クリックした</p>
+    <button @click="increments">発火</button>
+
+    <p :class="{ hoge: isChild, 'hoge-active': isActive}">Text</p>
+    <p :style="{ color: textColor, backgroundColor: bgColor}">Text</p>
+    <p :class="[isActive ? textRed : textBlue]">Hey!</p>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
   <script>
-    const state = { count: 0 }
     const app = new Vue({
       el: "#app",
 
@@ -24,12 +34,31 @@
         message: {
           object: 2
         },
+        scroll: 0,
         array: ["Vue.js", "React", "Laravel"],
-        num: 2
+        num: 2,
+        count: 0,
+        isChild: true,
+        isActive: false,
+        textRed: 'red',
+        textBlue: 'blue',
+        bgColor: 'lightgray'
       },
 
       methods: {
+        increments() {
+          this.count += 1;
+        },
 
+        thisOk() {
+          const vm = this;
+          setTimeout(function() { vm.count++ }, 100)
+          setTimeout(function() { this.count++ }.bind(this), 100)
+        }
+      },
+
+      mounted() {
+        this.scroll = 100;
       },
 
       computed: {
@@ -38,7 +67,6 @@
         }
       }
     });
-    state.count++;
   </script>
 </body>
 
