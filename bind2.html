@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bind</title>
+</head>
+
+<body>
+  <div id="app">
+    <img :src="item.src" :alt="item.alt" :width="item.width" :height="item.height">
+    <img v-bind="item" :id="'thumb-' + item.id">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: "#app",
+
+      data: {
+        item: {
+          id: 1,
+          src: 'item1.jpg',
+          alt: '商品サムネイル',
+          width: 200,
+          height: 200
+        }
+      },
+    });
+  </script>
+</body>
+
+</html>
