@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <button value="buttonValue">button</button>
+  <script>
+    (() => {
+      this.value = 1;
+
+      const btn = document.querySelector('button');
+
+      // 普通の関数は実行コンテキストによってthisが変化する
+      const func1 = function (e) {
+        // buttonエレメントのコンテキストで実行されるため this はボタンエレメントを指す
+        console.log(`function() {}: ${this.value}`);
+      };
+      // アローファンクションはthisが定義されたスコープで固定される
+      const func2 = (e) => {
+        func1(); // thisが固定されているので1を出力する
+        console.log(`() => {}: ${this.value}`);
+      };
+      const func3 = (arg, e) => {
+        console.log(arg);
+        console.log(e);
+      };
+
+      btn.addEventListener('click', func1);
+      btn.addEventListener('click', func2);
+
+      btn.addEventListener('click', func3('aaa')); // 即実行されてしまう
+      btn.addEventListener('click', (e) => func3('bbb', e)); // 引数を指定して実行する関数を実行するための関数を作成する
+      btn.addEventListener('click', func3.bind(this, 'ccc')); // 引数とthisを固定する
+    })();
+  </script>
+</body>
+
+</html>
