@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <script>
+    console.log('global', this);
+
+    (() => {
+
+      function test() {
+        console.log('test', this);
+      }
+      test();
+
+      const obj = {
+        test1: function () {
+          // obj.test1() で呼び出される場合は obj
+          // const objtest1 = obj.test; objtest1() で呼び出される場合はその実行コンテキスト
+          console.log('obj.test1', this);
+        },
+
+        test2() {
+          // これはtest1の省略形なので test1と同じく obj
+          console.log('obj.test2', this);
+        },
+
+        test3: () => {
+          // アローファンクションは定義時のコンテキストに束縛されるので
+          // window
+          console.log('obj.test3', this);
+        },
+
+        test4() {
+          // test4のコンテキストは test2と同じで obj だけど Promiseのコンテキストがwindowなので
+          // これもwindow
+          (new Promise(r => setTimeout(r, 100))).then(function () { console.log('obj.test4', this); });
+        },
+
+        test5() {
+          // test5のコンテキストは test2と同じで obj だけど Promiseのコンテキストがwindowなので
+          // これもwindow
+          fetch('https://zipcloud.ibsnet.co.jp/api/search?zipcode=7830060').then(function () { console.log('obj.test5', this); });
+        },
+
+        // async/await （エイシンク/アウェイト）
+        // test5はこっちで書くように変わった
+        async test6() {
+          const res = await fetch('https://zipcloud.ibsnet.co.jp/api/search?zipcode=7830060');
+          console.log('obj.test6', this);
+        },
+      };
+      obj.test1();
+      const objtest1 = obj.test1; objtest1();
+      obj.test2();
+      obj.test3();
+      obj.test4();
+      obj.test5();
+      obj.test6();
+    })();
+  </script>
+</body>
+
+</html>
