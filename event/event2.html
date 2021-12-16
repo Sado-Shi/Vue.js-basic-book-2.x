@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event</title>
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <a href="#top" @click.stop="handler('div2')">div2</a>
+      <input @keydown.space="handler">aaa</input>
+      <button @click.shift="handler">クリックせよ！</button>
+      <br>
+      <input type="text" :value="message" @input="event">
+      {{ message }}
+
+      <textarea name="" id="" cols="30" rows="10" v-model="vModel"></textarea>
+        <pre>{{ vModel }}</pre>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: "#app",
+
+      data: {
+        message: "",
+        vModel: "v-modelだよ"
+      },
+
+      methods: {
+        handler(comment) {
+          console.log(comment);
+        },
+        event(event) {
+          this.message = event.target.value
+        }
+      },
+    });
+  </script>
+</body>
+
+</html>
