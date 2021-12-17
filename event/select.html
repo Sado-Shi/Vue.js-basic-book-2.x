@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event</title>
+</head>
+
+<body>
+  <div id="app">
+    <select v-model="val1">
+      <option disabled="disabled">選択してください</option>
+      <option value="a">A</option>
+      <option value="b">B</option>
+      <option value="c">C<option>
+    </select>
+
+    <select v-model="val2" multiple>
+      <option value="a">A</option>
+      <option value="b">B</option>
+      <option value="c">C<option>
+    </select>
+    {{ val2 }}
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: "#app",
+
+      data: {
+        val1: '',
+        val2: []
+      },
+
+      methods: {
+
+      },
+    });
+  </script>
+</body>
+
+</html>
