@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event</title>
+</head>
+
+<body>
+  <div id="app">
+    <p>X: {{ halfPoint.x }}</p>
+    <p>Y: {{ halfPoint.y }}</p>
+
+    <input v-model.number="width">{{ width }}
+    <input v-model.number="halfWidth">{{ halfWidth }}
+
+    <ol>
+      <li>{{ computedData }}</li>
+      <li>{{ computedData }}</li>
+      <li>{{ methodsData() }}</li>
+      <li>{{ methodsData() }}</li>
+    </ol>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: "#app",
+
+      data: {
+        width: 500,
+        height: 300
+      },
+
+      computed: {
+        halfWidth: {
+          get() {
+            return this.width / 2
+          },
+
+          set(val) {
+            return this.width = val * 2
+          }
+        },
+
+        computedData() {
+          { return Math.random() }
+        },
+
+        halfHeight() {
+          return this.height / 2
+        },
+
+        halfPoint() {
+          return {
+            x: this.halfWidth,
+            y: this.halfHeight
+          }
+        }
+      },
+
+      methods: {
+        methodsData() {
+          { return Math.random() }
+        },
+      },
+    });
+  </script>
+</body>
+
+</html>

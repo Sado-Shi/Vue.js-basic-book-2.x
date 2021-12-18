@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event</title>
+</head>
+
+<body>
+  <div id="app">
+    <input v-model.number="budget">円以下に絞り込む<br>
+    <input v-model.number="limit">件を表示
+    <p>{{ matched.length }} 件中 {{ limited.length }} 件表示中</p>
+    <ul>
+      <li v-for="item in limited" :key="item.id">
+        {{ item.name }} {{ item.price }}円
+      </li>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: "#app",
+
+      data: {
+        budget: 300,
+
+        limit: 2,
+
+        list: [
+          { id: 1, name: 'りんご', price: 100 },
+          { id: 2, name: 'ばなな', price: 200 },
+          { id: 3, name: 'いちご', price: 400 },
+          { id: 4, name: 'おれんじ', price: 300 },
+          { id: 5, name: 'めろん', price: 500 },
+        ]
+      },
+
+      computed: {
+        matched() {
+          return this.list.filter((el) => {
+            return el.price <= this.budget
+          })
+        },
+
+        limited() {
+          return this.matched.slice(0, this.limit)
+        }
+      },
+
+
+    });
+  </script>
+</body>
+
+</html>
