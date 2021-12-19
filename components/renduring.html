@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component</title>
+</head>
+
+<body>
+  <!-- 親コンポ−ネント -->
+  <div id="app">
+    <ul>
+      <comp-child v-for="item in list" :key="item.id" :name="item.name" :hp="item.hp">
+      </comp-child>
+
+      <comp-child :val=message>
+      </comp-child>
+    </ul>
+
+    <!-- <button @click="attack">攻撃する！</button> -->
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    // 子コンポーネント
+    Vue.component('comp-child', {
+      template: '<li>{{ name }} HP.{{ hp }} . {{ val }}</li>',
+
+      props: {
+        name: String,
+        hp: {
+          type: Number,
+        },
+        val: {
+          type: String,
+        }
+      }
+    })
+
+    new Vue({
+      el: "#app",
+      components: {
+
+      },
+
+      data: {
+        list: [
+          { id: 1, name: "ピカチュウ", hp: 200 },
+          { id: 2, name: "カメックス", hp: 400 },
+          { id: 3, name: "ミュウツー", hp: 900 }
+        ],
+        message: "aa",
+        hp: 10
+      },
+
+      // methods: {
+      //   attack() {
+      //     this.list
+      //   }
+      // },
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>event</title>
+</head>
+
+<body>
+  <div id="app">
+    {{ price | localNumber }}
+    {{ message | localNum}}
+    {{ msg | filter(foo, 100)}}
+
+    <button @click="test">test!</button>
+
+    <input v-focus>
+
+    <button @click="list.push(list.length+1)">追加</button>
+    <ul ref="list">
+      <li v-for="item in list">{{ item }}</li>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios@0.17.1/dist/axios.min.js"></script>
+  <script>
+    // Vue.directive('focus', {
+    //   inserted: (el) => {
+    //     el.focus()
+    //   }
+    // })
+
+    Vue.filter('localNum', (val) => {
+      return val.toLocaleString()
+    })
+
+    const app = new Vue({
+      el: "#app",
+
+      data: {
+        price: 19800,
+        message: 1000,
+        msg: 1500,
+        foo: 'foo',
+        initial: "initial",
+        list: []
+      },
+
+      filters: {
+        localNumber(val) {
+          return val.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
+        },
+
+        filter(msg, foo, num) {
+          console.log(msg, foo, num)
+        }
+      },
+
+      watch: {
+        list() {
+          // 更新後の高さを取得できない
+          console.log('通常', this.$refs.list.offsetHeight)
+          // console.log('通常', this.$refs.list)
+          // nextTickを使用するとできる！
+          this.$nextTick( () => {
+            console.log('nextTick', this.$refs.list.offsetHeight)
+          })
+        }
+      },
+
+      computed: {
+
+      },
+
+      methods: {
+        test() {
+          console.log(this);
+        },
+      },
+
+      directives: {
+        focus: {
+          inserted(el) {
+            el.focus()
+            console.log(this);
+          }
+        }
+      }
+
+    });
+  </script>
+</body>
+
+</html>
