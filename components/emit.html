@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component</title>
+</head>
+
+<body>
+  <!-- 親コンポ−ネント -->
+  <div id="app">
+    <ul>
+      <comp-child v-for="item in list"
+      :key="item.id" v-bind="item"
+      @attack="handleAttack"></comp-child>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    // 子コンポーネント
+    Vue.component('comp-child', {
+      template: '<li>id:{{ id }} {{ name }} HP.{{ hp }}\<button @click="doAttack">攻撃する</button></li>',
+
+      props: { id: Number, name: String, hp: Number },
+
+      methods: {
+        doAttack() {
+          console.log("hoge");
+          this.$emit('attack', this.id)
+        }
+      }
+    })
+
+    new Vue({
+      el: "#app",
+
+      data: {
+        list: [
+          { id: 1, name: "ピカチュウ", hp: 200 },
+          { id: 2, name: "カメックス", hp: 400 },
+          { id: 3, name: "ミュウツー", hp: 900 }
+        ]
+      },
+
+        methods: {
+          handleAttack(id) {
+            const pokemon = this.list.find((el) => {
+              return el.id === id
+            })
+            // HPが０より多ければ１０減らす
+            if(pokemon !== undefined && pokemon.hp > 0) {
+              pokemon.hp -= 10
+            }
+          }
+        }
+    });
+  </script>
+</body>
+
+</html>
