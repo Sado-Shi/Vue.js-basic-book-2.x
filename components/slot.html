@@ -12,25 +12,33 @@
   <!-- 親コンポ−ネント -->
   <div id="app">
     <comp-child>
-      <template v-slot="header">
-        デフォルトスロット
+      <template v-slot:header>
+        headerのスロット
       </template>
+      <template v-slot:footer>
+        Hello!!フッター
+      </template>
+      通常のslot
     </comp-child>
   </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script>
-      // 子コンポーネント
-      Vue.component('comp-child', {
-        template: '<div><slot name="header">なんにもあらへん</slot><div><slot name="header">デフォ</slot></div></div>',
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script>
+    // 子コンポーネント
+    Vue.component('comp-child', {
+      template: `<div>
+          <slot name="footer">空でした</slot>
+          <div><slot name="header">空でした</slot></div>
+          <slot>空です</slot>
+          </div>`,
 
-        components: {
+      components: {
 
-        },
+      },
 
-        methods: {
+      methods: {
 
-        },
-      }),
+      },
+    }),
 
       new Vue({
         el: "#app",
@@ -43,7 +51,7 @@
 
         }
       });
-    </script>
+  </script>
 </body>
 
 </html>
